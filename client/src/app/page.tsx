@@ -14,8 +14,10 @@ export default async function HomeRoute() {
 
 	return (
 		<div>
+			{/* {data.title} */}
+			{/* {data.description} */}
 			<BlockRenderer blocks={blocks} />
-			<div className="container">111</div>
+			<div className="container"></div>
 		</div>
 	);
 }
