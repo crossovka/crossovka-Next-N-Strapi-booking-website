@@ -6,5 +6,16 @@
     "description": ""
   },
   "options": {},
-  "attributes": {}
+  "attributes": {
+    "logoText": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
 }

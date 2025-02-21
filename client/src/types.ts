@@ -60,7 +60,14 @@ export interface ImageProps {
 	alternativeText: string;
 }
 
+// export interface LogoProps {
+// 	logoText: string;
+// 	image: ImageProps;
+// }
+
 export interface LogoProps {
-	logoText: string;
-	image: ImageProps;
+	id: number;
+	documentId: string;
+	url: string;
+	alternativeText: string;
 }

@@ -95,3 +95,29 @@ export async function getPageBySlug(slug: string) {
 		throw error;
 	}
 }
+
+const globalSettingQuery = qs.stringify(
+	{
+		populate: {
+			blocks: {
+				populate: '*', // Заполнение всех вложенных полей в блоках
+			},
+		},
+	},
+	{ encode: false } // Отключаем кодирование URL
+);
+
+export async function getGlobalSettings() {
+	const path = '/api/global';
+	const url = new URL(path, BASE_URL);
+	url.search = globalSettingQuery;
+
+	try {
+		const response = await fetchAPI(url.href, { method: 'GET' });
+		console.log('getGlobalSettings Response:', response);
+		return response;
+	} catch (error) {
+		console.error('API Fetch Error:', error);
+		throw new Error('Failed to fetch global settings');
+	}
+}
