@@ -1,14 +1,18 @@
-export type Block = HeroSectionProps | InfoBlockProps;
-// | FeaturedArticleProps
-// | SubscribeProps
+export type Block =
+	| HeroSectionProps
+	| InfoBlockProps
+	| FeaturedArticleProps
+	| SubscribeProps;
 // | HeadingProps
 // | ParagraphWithImageProps
 // | ParagraphProps
 // | FullImageProps;
 
-type ComponentType = 'blocks.hero-section' | 'blocks.info-block';
-// | 'blocks.featured-article'
-// | 'blocks.subscribe'
+type ComponentType =
+	| 'blocks.hero-section'
+	| 'blocks.info-block'
+	| 'blocks.featured-article'
+	| 'blocks.subscribe';
 // | 'blocks.heading'
 // | 'blocks.paragraph-with-image'
 // | 'blocks.paragraph'
@@ -70,4 +74,18 @@ export interface LogoProps {
 	documentId: string;
 	url: string;
 	alternativeText: string;
+}
+
+export interface FeaturedArticleProps extends Base<'blocks.featured-article'> {
+	headline: string;
+	excerpt: string;
+	link: LinkProps;
+	image: ImageProps;
+}
+
+export interface SubscribeProps extends Base<'blocks.subscribe'> {
+	headline: string;
+	content: string;
+	placeholder: string;
+	buttonText: string;
 }
