@@ -209,5 +209,15 @@ export async function getContentBySlug(slug: string, path: string) {
 		{ encode: false } // Отключаем кодирование URL
 	);
 
-	return fetchAPI(url.href, { method: 'GET' });
+	console.log('Fetching content by slug:', slug);
+	console.log('Generated URL:', url.href);
+
+	try {
+		const response = await fetchAPI(url.href, { method: 'GET' });
+		console.log('Server Response getContentBySlug:', response);
+		return response;
+	} catch (error) {
+		console.error('Error fetching content getContentBySlug:', error);
+		throw error;
+	}
 }

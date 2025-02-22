@@ -126,3 +126,19 @@ export interface FullImageProps extends Base<'blocks.full-image'> {
 	__component: 'blocks.full-image';
 	image: ImageProps;
 }
+
+export interface EventProps {
+	id: number;
+	documentId: string;
+	title: string;
+	description: string;
+	slug: string;
+	image: ImageProps;
+	author: string;
+	featured: boolean;
+	price: string;
+	startDate: string;
+	publishedAt: string;
+	createdAt: string;
+	updatedAt: string;
+}
