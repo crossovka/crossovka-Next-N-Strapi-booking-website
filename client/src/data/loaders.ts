@@ -121,3 +121,93 @@ export async function getGlobalSettings() {
 		throw new Error('Failed to fetch global settings');
 	}
 }
+
+export async function getContent(
+	path: string,
+	featured?: boolean,
+	query?: string,
+	page?: string
+) {
+	const url = new URL(path, BASE_URL);
+
+	url.search = qs.stringify({
+		sort: ['createdAt:desc'],
+		filters: {
+			$or: [
+				{ title: { $containsi: query } },
+				{ description: { $containsi: query } },
+			],
+			...(featured && { featured: { $eq: featured } }),
+		},
+		pagination: {
+			pageSize: BLOG_PAGE_SIZE,
+			page: parseInt(page || '1'),
+		},
+		populate: {
+			image: {
+				fields: ['url', 'alternativeText'],
+			},
+		},
+	});
+
+	console.log('URL object:', url);
+	console.log('Fetching content from:', url.href);
+
+	try {
+		const response = await fetchAPI(url.href, { method: 'GET' });
+		console.log('Response:', response); // Выводим ответ в консоль
+		return response;
+	} catch (error) {
+		console.error('Fetch error:', error);
+		throw error;
+	}
+}
+
+export async function getBlogPosts(page = 1) {
+	const url = new URL('/api/articles', BASE_URL);
+	url.search = qs.stringify(
+		{
+			populate: '*', // Загружаем все вложенные поля
+			pagination: {
+				pageSize: BLOG_PAGE_SIZE,
+				page,
+			},
+			sort: ['publishedAt:desc'],
+		},
+		{ encode: false }
+	);
+
+	try {
+		const response = await fetchAPI(url.href, { method: 'GET' });
+		console.log('Blog posts response:', response);
+		return response;
+	} catch (error) {
+		console.error('Error fetching blog posts:', error);
+		throw error;
+	}
+}
+
+export async function getContentBySlug(slug: string, path: string) {
+	const url = new URL(path, BASE_URL);
+
+	url.search = qs.stringify(
+		{
+			filters: {
+				slug: {
+					$eq: slug,
+				},
+			},
+			populate: {
+				image: {
+					fields: ['url', 'alternativeText'],
+				},
+				blocks: {
+					populate: '*', // Заполнение всех вложенных полей в блоках
+				},
+			},
+		},
+		{ encode: false } // Отключаем кодирование URL
+	);
+
+	return fetchAPI(url.href, { method: 'GET' });
+}

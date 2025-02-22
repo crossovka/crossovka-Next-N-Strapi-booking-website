@@ -2,21 +2,21 @@ export type Block =
 	| HeroSectionProps
 	| InfoBlockProps
 	| FeaturedArticleProps
-	| SubscribeProps;
-// | HeadingProps
-// | ParagraphWithImageProps
-// | ParagraphProps
-// | FullImageProps;
+	| SubscribeProps
+	| HeadingProps
+	| ParagraphWithImageProps
+	| ParagraphProps
+	| FullImageProps;
 
 type ComponentType =
 	| 'blocks.hero-section'
 	| 'blocks.info-block'
 	| 'blocks.featured-article'
-	| 'blocks.subscribe';
-// | 'blocks.heading'
-// | 'blocks.paragraph-with-image'
-// | 'blocks.paragraph'
-// | 'blocks.full-image';
+	| 'blocks.subscribe'
+	| 'blocks.heading'
+	| 'blocks.paragraph-with-image'
+	| 'blocks.paragraph'
+	| 'blocks.full-image';
 
 interface Base<
 	T extends ComponentType,
@@ -88,4 +88,41 @@ export interface SubscribeProps extends Base<'blocks.subscribe'> {
 	content: string;
 	placeholder: string;
 	buttonText: string;
+}
+
+export interface ArticleProps {
+	id: number;
+	documentId: string;
+	title: string;
+	description: string;
+	slug: string;
+	image: ImageProps;
+	author: string;
+	featured: boolean;
+	publishedAt: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface HeadingProps extends Base<'blocks.heading'> {
+	heading: string;
+	linkId?: string;
+}
+
+export interface ParagraphWithImageProps
+	extends Base<'blocks.paragraph-with-image'> {
+	content: string;
+	image: ImageProps;
+	reversed?: boolean;
+	imageLandscape?: boolean;
+}
+
+export interface ParagraphProps extends Base<'blocks.paragraph'> {
+	content: string;
+}
+
+export interface FullImageProps extends Base<'blocks.full-image'> {
+	id: number;
+	__component: 'blocks.full-image';
+	image: ImageProps;
 }
